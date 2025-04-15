@@ -8,6 +8,8 @@ services:
     volumes:
       - ./src:/var/www/html/app
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
 
   php:
     build:
@@ -18,8 +20,26 @@ services:
     volumes:
       - ./src:/var/www/html/app
     environment:
+      - APP_NAME=FileManageSystem
       - APP_ENV=local
       - APP_DEBUG=true
+      - APP_KEY=base64:OxLS7A2qOvxcwW3tJZ9PS8q0ORTIrZ8lneZ/iVUcuas=
+      - APP_LOCALE=ja
+      - APP_FALLBACK_LOCALE=ja
+      - APP_FAKER_LOCALE=ja_JP
+      - APP_TIMEZONE=Asia/Tokyo
+      - APP_URL=http://localhost
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=laravel_db
+      - DB_USERNAME=laravel_user
+      - DB_PASSWORD=laravel_pass
+      - SESSION_DRIVER=redis
+      - REDIS_CLIENT=predis
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=
+      - REDIS_PORT=6379
 
   postgres:
     image: postgres:latest
